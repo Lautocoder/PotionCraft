@@ -22,10 +22,10 @@ jobs:
         service:
           - name: frontend
             context: ./frontend
-            tag: "satynel/potioncraft-web:1.0"
+            tag: "${{ vars.DOCKERHUB_USERNAME }}/potioncraft-web:1.0"
           - name: api
             context: ./api
-            tag: "satynel/potioncraft-api:1.0"
+            tag: "${{ vars.DOCKERHUB_USERNAME }}/potioncraft-api:1.0"
 
     steps:
     - name: Checkout repository
@@ -68,6 +68,10 @@ jobs:
       run: |
         echo "## 🔍 Trivy scan: ${{ matrix.service.name }}" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
+        if [ ! -f trivy-report.json ]; then
+          echo "⚠️ Trivy report unavailable (build/push step failed before scan)." >> $GITHUB_STEP_SUMMARY
+          exit 0
+        fi
         COUNT=$(jq '[.Results[]?.Vulnerabilities[]?] | length' trivy-report.json)
         if [ "$COUNT" = "0" ]; then
           echo "✅ Aucune vulnérabilité CRITICAL/HIGH détectée." >> $GITHUB_STEP_SUMMARY
