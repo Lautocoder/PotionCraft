@@ -22,10 +22,10 @@ jobs:
         service:
           - name: frontend
             context: ./frontend
-            tag: "sevrius/potioncraft:frontend"
+            tag: "satynel/potioncraft:frontend"
           - name: api
             context: ./api
-            tag: "sevrius/potioncraft:api"
+            tag: "satynel/potioncraft:api"
 
     steps:
     - name: Checkout repository
