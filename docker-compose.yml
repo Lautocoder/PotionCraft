@@ -1,7 +1,7 @@
 services:
   portioncraft-web:
     build: ./frontend
-    image: satynel/potioncraft-web:1.0
+    image: satynel/potioncraft:web
     ports:
       - "8080:80"
     depends_on:
@@ -9,6 +9,6 @@ services:
 
   portioncraft-api:
     build: ./api
-    image: satynel/potioncraft-api:1.0
+    image: satynel/potioncraft:api
     ports:
       - "8081:80"
